@@ -1,0 +1,120 @@
+.firmar-wrapper {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 0.5rem;
+}
+
+.page-head {
+    margin-bottom: 1.5rem;
+}
+
+.page-head h1 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.page-head .lead {
+    max-width: 70ch;
+    color: #555;
+}
+
+.stepper {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.stepper .step {
+    flex: 1 1 12rem;
+    padding: 0.6rem 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background: #fafafa;
+    color: #666;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stepper .step.done {
+    background: #e8f5e9;
+    color: #1b5e20;
+    border-color: #a5d6a7;
+}
+
+.stepper .dot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid currentColor;
+    font-weight: 600;
+}
+
+.card {
+    margin-bottom: 1.5rem;
+    border: 1px solid #e4e4e4;
+    border-radius: 8px;
+}
+
+.card-header {
+    background: #f8f9fa;
+    border-bottom: 1px solid #e4e4e4;
+    padding: 0.6rem 1rem;
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+.pdf-preview {
+    height: 540px;
+    border: 1px solid #e4e4e4;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.pdf-preview object {
+    width: 100%;
+    height: 100%;
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.hints details {
+    background: #f4f7fb;
+    border-left: 3px solid #1976d2;
+    padding: 0.5rem 0.75rem;
+    margin: 0.5rem 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.hints summary {
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.signer-table {
+    margin-top: 1rem;
+}
+
+.signer-table th {
+    width: 12rem;
+    color: #555;
+    font-weight: 500;
+}
+
+@media (max-width: 600px) {
+    .pdf-preview { height: 360px; }
+    .stepper .step { font-size: 0.85rem; }
+}

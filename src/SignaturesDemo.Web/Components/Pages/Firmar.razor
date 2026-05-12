@@ -1,0 +1,377 @@
+@page "/firmar"
+@rendermode InteractiveServer
+@inject IJSRuntime JS
+@inject IHttpClientFactory HttpFactory
+@inject ILogger<Firmar> Log
+
+<PageTitle>SignaturesDemo · Firmar</PageTitle>
+
+<div class="firmar-wrapper">
+
+    <header class="page-head">
+        <h1>Firmar PDF con AutoFirma</h1>
+        <p class="lead">
+            Tres pasos: <strong>(1)</strong> el servidor genera un PDF nuevo,
+            <strong>(2)</strong> lo firmas con tu certificado mediante AutoFirma,
+            <strong>(3)</strong> el servidor valida la firma y muestra los datos
+            del firmante.
+        </p>
+    </header>
+
+    <div class="stepper" aria-label="Progreso">
+        <div class="step @(_step >= Step.PdfLoaded ? "done" : "")">
+            <span class="dot">1</span> PDF generado
+        </div>
+        <div class="step @(_step >= Step.Signed ? "done" : "")">
+            <span class="dot">2</span> Firmado con AutoFirma
+        </div>
+        <div class="step @(_step >= Step.Validated ? "done" : "")">
+            <span class="dot">3</span> Firma validada
+        </div>
+    </div>
+
+    @if (_error is not null)
+    {
+        <div class="alert alert-danger" role="alert">
+            <strong>Algo ha fallado:</strong> @_error
+            @if (!string.IsNullOrEmpty(_errorCode))
+            {
+                <small class="text-muted d-block">Código: @_errorCode</small>
+            }
+            <button class="btn btn-link p-0 ms-2" @onclick="ClearError">cerrar</button>
+        </div>
+    }
+
+    <section class="card">
+        <div class="card-header">
+            <h2 class="h5 mb-0">1. PDF a firmar</h2>
+        </div>
+        <div class="card-body">
+            @if (_pdfBase64 is null)
+            {
+                <p class="text-muted">Cargando documento del API…</p>
+                <button class="btn btn-secondary" disabled>Solicitando PDF</button>
+            }
+            else
+            {
+                <p class="mb-2">
+                    Documento generado por <code>GET /api/pdf/sample</code>.
+                    El identificador es único por solicitud.
+                </p>
+                <div class="pdf-preview">
+                    <object type="application/pdf"
+                            data="data:application/pdf;base64,@_pdfBase64#toolbar=1&navpanes=0"
+                            aria-label="Vista previa del PDF a firmar">
+                        <p>
+                            Tu navegador no embebe PDFs.
+                            <a href="data:application/pdf;base64,@_pdfBase64"
+                               download="documento-a-firmar.pdf">Descárgalo aquí</a>
+                            para verlo antes de firmar.
+                        </p>
+                    </object>
+                </div>
+                <div class="actions">
+                    <button class="btn btn-outline-secondary" @onclick="LoadPdfAsync" disabled="@_busy">
+                        Regenerar PDF
+                    </button>
+                </div>
+            }
+        </div>
+    </section>
+
+    <section class="card">
+        <div class="card-header">
+            <h2 class="h5 mb-0">2. Firmar con AutoFirma</h2>
+        </div>
+        <div class="card-body">
+            <p>
+                Al pulsar <em>Firmar</em>, el navegador delega en AutoFirma (escritorio o app
+                móvil). Se abrirá una ventana donde tendrás que <strong>elegir tu certificado</strong>
+                e introducir el PIN si lo tiene.
+            </p>
+            <div class="hints">
+                <details>
+                    <summary>¿No tienes AutoFirma instalado?</summary>
+                    <ul>
+                        <li>
+                            Escritorio:
+                            <a href="https://firmaelectronica.gob.es/Firma/es/descargas/descargaAutofirma.html"
+                               target="_blank" rel="noopener">descarga desde firmaelectronica.gob.es</a>
+                            (Windows, macOS, Linux).
+                        </li>
+                        <li>Android: busca <em>"Cliente móvil @@firma"</em> en Play Store.</li>
+                        <li>iOS: busca <em>"AutoFirma"</em> en App Store.</li>
+                    </ul>
+                </details>
+                <details>
+                    <summary>¿Qué algoritmo y formato usamos?</summary>
+                    <p>
+                        Firma PAdES con SHA-256 + RSA. AutoFirma seleccionará el subfiltro
+                        correcto en función del cert (típicamente
+                        <code>ETSI.CAdES.detached</code> para PAdES-BES/EPES).
+                    </p>
+                </details>
+            </div>
+            <div class="actions">
+                <button class="btn btn-primary btn-lg"
+                        @onclick="SignAsync"
+                        disabled="@(_pdfBase64 is null || _busy)">
+                    @(_step == Step.Signing ? "Firmando…" : "Firmar")
+                </button>
+                @if (_signedPdfBase64 is not null)
+                {
+                    <a class="btn btn-outline-secondary"
+                       href="data:application/pdf;base64,@_signedPdfBase64"
+                       download="documento-firmado.pdf">
+                        Descargar PDF firmado
+                    </a>
+                }
+            </div>
+        </div>
+    </section>
+
+    @if (_validation is not null)
+    {
+        <section class="card">
+            <div class="card-header">
+                <h2 class="h5 mb-0">3. Resultado de la validación</h2>
+            </div>
+            <div class="card-body">
+                @if (_validation.IsValid)
+                {
+                    <div class="alert alert-success">
+                        Firma <strong>válida</strong>. La integridad del documento se ha verificado
+                        y cubre el documento completo.
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-warning">
+                        Firma <strong>no válida</strong> o incompleta.
+                        @if (!string.IsNullOrEmpty(_validation.Error)) { <span>@_validation.Error</span> }
+                    </div>
+                }
+
+                @if (_signedPdfBase64 is not null)
+                {
+                    <p class="mb-2 mt-2">
+                        <strong>PDF firmado:</strong> la rúbrica de AutoFirma aparece en el
+                        recuadro de la esquina inferior derecha.
+                    </p>
+                    <div class="pdf-preview">
+                        <object type="application/pdf"
+                                data="data:application/pdf;base64,@_signedPdfBase64#toolbar=1&navpanes=0"
+                                aria-label="Vista previa del PDF firmado">
+                            <p>
+                                Tu navegador no embebe PDFs.
+                                <a href="data:application/pdf;base64,@_signedPdfBase64"
+                                   download="documento-firmado.pdf">Descárgalo aquí.</a>
+                            </p>
+                        </object>
+                    </div>
+                }
+
+                @foreach (var sig in _validation.Signatures)
+                {
+                    <table class="table table-sm signer-table">
+                        <tbody>
+                            <tr><th>Campo de firma</th><td><code>@sig.FieldName</code></td></tr>
+                            <tr><th>Firmante (CN)</th><td>@sig.SignerCommonName</td></tr>
+                            <tr><th>Subject completo</th><td><code>@sig.SignerSubject</code></td></tr>
+                            <tr><th>Emisor (CA)</th><td>@sig.IssuerCommonName</td></tr>
+                            <tr><th>Algoritmo</th><td>@sig.Algorithm</td></tr>
+                            <tr><th>Firmado el</th><td>@sig.SignedAt.ToString("u")</td></tr>
+                            <tr><th>Validez del cert</th>
+                                <td>@sig.CertificateNotBefore.ToString("yyyy-MM-dd") &rarr; @sig.CertificateNotAfter.ToString("yyyy-MM-dd")</td></tr>
+                            <tr><th>Nº de serie</th><td><code>@sig.CertificateSerialHex</code></td></tr>
+                            <tr><th>Integridad</th>
+                                <td>@(sig.IntegrityValid ? "✅ correcta" : "❌ alterada")</td></tr>
+                            <tr><th>Cubre todo el doc</th>
+                                <td>@(sig.CoversWholeDocument ? "sí" : "no")</td></tr>
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </section>
+    }
+
+</div>
+
+@code {
+    private enum Step { Initial, PdfLoaded, Signing, Signed, Validating, Validated }
+
+    private Step _step = Step.Initial;
+    private bool _busy;
+    private string? _pdfBase64;
+    private string? _signatureFieldName;
+    private string? _signedPdfBase64;
+    private ValidationResult? _validation;
+    private string? _error;
+    private string? _errorCode;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadPdfAsync();
+    }
+
+    private async Task LoadPdfAsync()
+    {
+        try
+        {
+            _busy = true;
+            _error = null;
+            _signedPdfBase64 = null;
+            _validation = null;
+
+            var client = HttpFactory.CreateClient("Api");
+            var resp = await client.GetFromJsonAsync<PdfWithBoxResponse>("api/pdf/sample-with-box")
+                ?? throw new InvalidOperationException("API devolvió respuesta vacía.");
+
+            _pdfBase64 = resp.PdfBase64;
+            _signatureFieldName = resp.SignatureFieldName;
+            _step = Step.PdfLoaded;
+        }
+        catch (Exception ex)
+        {
+            Log.LogError(ex, "Error pidiendo PDF al API");
+            SetError("No se pudo obtener el PDF del API. " +
+                     "¿Está corriendo SignaturesDemo.Api en https://localhost:7001?",
+                     "API_DOWN");
+        }
+        finally { _busy = false; }
+    }
+
+    private async Task SignAsync()
+    {
+        if (_pdfBase64 is null) return;
+
+        try
+        {
+            _busy = true;
+            _error = null;
+            _step = Step.Signing;
+            StateHasChanged();
+
+            await JS.InvokeAsync<string>("SignaturesDemo.ensureLoaded");
+            await JS.InvokeVoidAsync("SignaturesDemo.loadClient");
+
+            var result = await JS.InvokeAsync<SignResult>(
+                "SignaturesDemo.signPdf",
+                _pdfBase64,
+                new SignOptions(
+                    Reason: "Demo educativa - firma de aprendizaje",
+                    SignatureField: _signatureFieldName));
+
+            if (string.IsNullOrEmpty(result.SignedPdfBase64))
+            {
+                SetError("AutoFirma devolvió una firma vacía.", "EMPTY_SIGNATURE");
+                _step = Step.PdfLoaded;
+                return;
+            }
+
+            _signedPdfBase64 = result.SignedPdfBase64;
+            _step = Step.Signed;
+            await ValidateAsync();
+        }
+        catch (JSException jse)
+        {
+            Log.LogWarning(jse, "JS error during signing");
+            SetError(ExtractMessage(jse.Message), "JS_ERROR");
+            _step = Step.PdfLoaded;
+        }
+        catch (Exception ex)
+        {
+            Log.LogError(ex, "Error al firmar");
+            SetError(ex.Message, "SIGN_FAILED");
+            _step = Step.PdfLoaded;
+        }
+        finally { _busy = false; }
+    }
+
+    private async Task ValidateAsync()
+    {
+        if (_signedPdfBase64 is null) return;
+
+        try
+        {
+            _busy = true;
+            _step = Step.Validating;
+            StateHasChanged();
+
+            var client = HttpFactory.CreateClient("Api");
+            var response = await client.PostAsJsonAsync(
+                "api/signatures/validate",
+                new { signedPdfBase64 = _signedPdfBase64 });
+
+            response.EnsureSuccessStatusCode();
+            _validation = await response.Content.ReadFromJsonAsync<ValidationResult>();
+            _step = Step.Validated;
+        }
+        catch (Exception ex)
+        {
+            Log.LogError(ex, "Error validando firma");
+            SetError("El API devolvió un error validando la firma: " + ex.Message,
+                     "VALIDATION_FAILED");
+        }
+        finally { _busy = false; }
+    }
+
+    private void SetError(string message, string code)
+    {
+        _error = message;
+        _errorCode = code;
+    }
+
+    private void ClearError()
+    {
+        _error = null;
+        _errorCode = null;
+    }
+
+    private static string ExtractMessage(string raw)
+    {
+        // JS rejections come through as serialized objects in the exception
+        // message. We surface the human-readable bit if we recognize it.
+        var idx = raw.IndexOf("message", StringComparison.OrdinalIgnoreCase);
+        return idx > 0 ? raw[idx..] : raw;
+    }
+
+    private sealed record SignOptions(string? Reason, string? SignatureField);
+
+    private sealed record PdfWithBoxResponse(
+        string DocumentId,
+        string PdfBase64,
+        string SignatureFieldName);
+
+    private sealed class SignResult
+    {
+        public string SignedPdfBase64 { get; set; } = string.Empty;
+        public string? CertificateBase64 { get; set; }
+        public object? Extra { get; set; }
+    }
+
+    private sealed class ValidationResult
+    {
+        public bool IsValid { get; set; }
+        public string? Error { get; set; }
+        public List<SignatureInfo> Signatures { get; set; } = [];
+    }
+
+    private sealed class SignatureInfo
+    {
+        public string FieldName { get; set; } = "";
+        public bool IntegrityValid { get; set; }
+        public bool CoversWholeDocument { get; set; }
+        public string SignerSubject { get; set; } = "";
+        public string SignerCommonName { get; set; } = "";
+        public string IssuerSubject { get; set; } = "";
+        public string IssuerCommonName { get; set; } = "";
+        public string CertificateSerialHex { get; set; } = "";
+        public DateTime CertificateNotBefore { get; set; }
+        public DateTime CertificateNotAfter { get; set; }
+        public DateTime SignedAt { get; set; }
+        public string Algorithm { get; set; } = "";
+        public string? Reason { get; set; }
+        public string? Location { get; set; }
+    }
+}

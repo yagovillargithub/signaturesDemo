@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{91F576AC-9A3A-49DA-9398-BA3B8DC7605B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignaturesDemo.Api", "src\SignaturesDemo.Api\SignaturesDemo.Api.csproj", "{59947686-C9D1-4605-9359-7370CE0035E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignaturesDemo.Web", "src\SignaturesDemo.Web\SignaturesDemo.Web.csproj", "{9312100C-99EE-453B-AC21-67159F328824}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59947686-C9D1-4605-9359-7370CE0035E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59947686-C9D1-4605-9359-7370CE0035E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59947686-C9D1-4605-9359-7370CE0035E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59947686-C9D1-4605-9359-7370CE0035E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9312100C-99EE-453B-AC21-67159F328824}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9312100C-99EE-453B-AC21-67159F328824}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9312100C-99EE-453B-AC21-67159F328824}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9312100C-99EE-453B-AC21-67159F328824}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{59947686-C9D1-4605-9359-7370CE0035E7} = {91F576AC-9A3A-49DA-9398-BA3B8DC7605B}
+		{9312100C-99EE-453B-AC21-67159F328824} = {91F576AC-9A3A-49DA-9398-BA3B8DC7605B}
+	EndGlobalSection
+EndGlobal

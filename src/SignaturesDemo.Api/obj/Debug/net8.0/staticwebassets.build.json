@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "tDSJy+mbGfY2nC651j2Ky9gC0SRcoDs7GzTGSA+6gpY=",
+  "Source": "SignaturesDemo.Api",
+  "BasePath": "_content/SignaturesDemo.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

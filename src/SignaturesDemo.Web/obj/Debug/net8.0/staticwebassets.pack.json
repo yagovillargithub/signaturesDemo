@@ -1,0 +1,49 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\GitHub\\signaturesDemo\\src\\SignaturesDemo.Web\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\SignaturesDemo.Web.bundle.scp.css",
+      "PackagePath": "staticwebassets\\SignaturesDemo.Web.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\GitHub\\signaturesDemo\\src\\SignaturesDemo.Web\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "C:\\GitHub\\signaturesDemo\\src\\SignaturesDemo.Web\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\GitHub\\signaturesDemo\\src\\SignaturesDemo.Web\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\GitHub\\signaturesDemo\\src\\SignaturesDemo.Web\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "C:\\GitHub\\signaturesDemo\\src\\SignaturesDemo.Web\\wwwroot\\js\\autofirma-integration.js",
+      "PackagePath": "staticwebassets\\js\\autofirma-integration.js"
+    },
+    {
+      "Id": "C:\\GitHub\\signaturesDemo\\src\\SignaturesDemo.Web\\wwwroot\\lib\\afirma\\autoscript.js",
+      "PackagePath": "staticwebassets\\lib\\afirma\\autoscript.js"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.SignaturesDemo.Web.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.SignaturesDemo.Web.props",
+      "PackagePath": "build\\SignaturesDemo.Web.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.SignaturesDemo.Web.props",
+      "PackagePath": "buildMultiTargeting\\SignaturesDemo.Web.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.SignaturesDemo.Web.props",
+      "PackagePath": "buildTransitive\\SignaturesDemo.Web.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
