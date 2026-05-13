@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "AuPDjJmF2axfmd7uZXlJwd0I8RkcY/k1xWoMW00hwkY=",
+  "Hash": "sM5UaP+9YZp3BUUIKpO3kx7jTNuTWZGgju0BV4A/rCQ=",
   "Source": "SignaturesDemo.Web",
   "BasePath": "_content/SignaturesDemo.Web",
   "Mode": "Default",
@@ -112,6 +112,25 @@
       "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css.map"
     },
     {
+      "Identity": "C:\\GitHub\\signaturesDemo\\src\\SignaturesDemo.Web\\wwwroot\\faq.html",
+      "SourceId": "SignaturesDemo.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\GitHub\\signaturesDemo\\src\\SignaturesDemo.Web\\wwwroot\\",
+      "BasePath": "_content/SignaturesDemo.Web",
+      "RelativePath": "faq.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\faq.html"
+    },
+    {
       "Identity": "C:\\GitHub\\signaturesDemo\\src\\SignaturesDemo.Web\\wwwroot\\favicon.png",
       "SourceId": "SignaturesDemo.Web",
       "SourceType": "Discovered",
@@ -129,6 +148,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.png"
+    },
+    {
+      "Identity": "C:\\GitHub\\signaturesDemo\\src\\SignaturesDemo.Web\\wwwroot\\firma-electronica.html",
+      "SourceId": "SignaturesDemo.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\GitHub\\signaturesDemo\\src\\SignaturesDemo.Web\\wwwroot\\",
+      "BasePath": "_content/SignaturesDemo.Web",
+      "RelativePath": "firma-electronica.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\firma-electronica.html"
     },
     {
       "Identity": "C:\\GitHub\\signaturesDemo\\src\\SignaturesDemo.Web\\wwwroot\\js\\autofirma-integration.js",

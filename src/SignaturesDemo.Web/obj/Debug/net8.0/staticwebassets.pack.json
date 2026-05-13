@@ -17,8 +17,16 @@
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
     },
     {
+      "Id": "C:\\GitHub\\signaturesDemo\\src\\SignaturesDemo.Web\\wwwroot\\faq.html",
+      "PackagePath": "staticwebassets\\faq.html"
+    },
+    {
       "Id": "C:\\GitHub\\signaturesDemo\\src\\SignaturesDemo.Web\\wwwroot\\favicon.png",
       "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "C:\\GitHub\\signaturesDemo\\src\\SignaturesDemo.Web\\wwwroot\\firma-electronica.html",
+      "PackagePath": "staticwebassets\\firma-electronica.html"
     },
     {
       "Id": "C:\\GitHub\\signaturesDemo\\src\\SignaturesDemo.Web\\wwwroot\\js\\autofirma-integration.js",

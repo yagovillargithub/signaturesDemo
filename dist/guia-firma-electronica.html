@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de firma electrónica en España</title>
+<style>
+  :root {
+    --fg: #1a1a1a;
+    --muted: #555;
+    --bg: #fafafa;
+    --card: #fff;
+    --border: #b5bac1;
+    --border-soft: #e3e3e3;
+    --accent: #2563eb;
+    --code-bg: #f4f4f5;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--fg);
+    background: var(--bg);
+    width: 80%;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+  h1, h2, h3 { line-height: 1.25; }
+  h1 {
+    border-bottom: 2px solid var(--border-soft);
+    padding-bottom: .4em;
+    margin-bottom: 0.3em;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: 1.05em;
+    margin-top: 0;
+    margin-bottom: 2.5em;
+  }
+  h2 {
+    margin-top: 3em;
+    border-bottom: 1px solid var(--border-soft);
+    padding-bottom: .3em;
+  }
+  h3 { margin-top: 2em; }
+  hr { border: 0; border-top: 1px solid var(--border-soft); margin: 2.4em 0; }
+  a { color: var(--accent); }
+  code {
+    background: var(--code-bg);
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+    font-size: 0.92em;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+    font-size: 0.94em;
+    background: var(--card);
+    border: 1px solid var(--border);
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 0.55em 0.75em;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: #f4f4f5; font-weight: 600; }
+  ul, ol { padding-left: 1.4em; }
+
+  .toc {
+    background: var(--card);
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    padding: 1em 1.4em;
+    margin-bottom: 3em;
+  }
+  .toc h3 { margin-top: 0; }
+  .toc ul { list-style: none; padding-left: 0; }
+  .toc li { margin: 0.35em 0; }
+  .toc a { text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+
+  .mermaid {
+    background: var(--card);
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    padding: 1.2em;
+    margin: 1.2em 0;
+    text-align: center;
+    overflow-x: auto;
+  }
+
+  details {
+    background: var(--card);
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    padding: 0;
+    margin: 0.6em 0;
+  }
+  details[open] { box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+  summary {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1.05em;
+    padding: 0.9em 1.1em;
+    list-style: none;
+    position: relative;
+    color: var(--fg);
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after {
+    content: "+";
+    position: absolute;
+    right: 1.1em;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.4em;
+    color: var(--accent);
+    transition: transform 0.15s ease;
+  }
+  details[open] summary::after { content: "−"; }
+  .answer { padding: 0 1.1em 1em 1.1em; }
+  .answer p:first-child { margin-top: 0; }
+  .answer p:last-child { margin-bottom: 0; }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.75em;
+    background: #eef2ff;
+    color: var(--accent);
+    padding: 0.15em 0.55em;
+    border-radius: 999px;
+    margin-left: 0.5em;
+    vertical-align: middle;
+    font-weight: 500;
+  }
+
+  .case-study {
+    margin-top: 3em;
+    background: var(--card);
+    border: 1px solid var(--border-soft);
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 1.4em 1.6em;
+  }
+  .case-study h2 {
+    margin-top: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+    color: var(--accent);
+  }
+  .case-study .question {
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 1em;
+  }
+  .case-study table th { width: 32%; white-space: nowrap; }
+
+  footer {
+    margin-top: 4em;
+    padding-top: 1em;
+    border-top: 1px solid var(--border-soft);
+    color: var(--muted);
+    font-size: 0.88em;
+  }
+</style>
+</head>
+<body>
+
+<h1>Guía de firma electrónica en España</h1>
+<p class="subtitle">Modelos de firma con valor legal eIDAS, requisitos como empresa u organismo, y preguntas frecuentes.</p>
+
+<nav class="toc">
+  <h3>Contenido</h3>
+  <ul>
+    <li><a href="#modelos">1. Modelos de firma</a>
+      <ul>
+        <li><a href="#modelo-a">A. AutoFirma (firma local)</a></li>
+        <li><a href="#modelo-b">B. Cl@ve Firma (centralizada del Estado)</a></li>
+        <li><a href="#modelo-c">C. TSP comercial (firma en la nube)</a></li>
+      </ul>
+    </li>
+    <li><a href="#comparativa">2. Los 3 modelos de un vistazo</a></li>
+    <li><a href="#elegir">3. Cuándo elegir cada uno</a></li>
+    <li><a href="#tsps">4. TSPs cualificados en España</a></li>
+    <li><a href="#faq">5. Preguntas frecuentes</a></li>
+    <li><a href="#caso">6. Caso práctico: contrato de servicios de administración</a></li>
+  </ul>
+</nav>
+
+<h2 id="modelos">1. Modelos de firma</h2>
+
+<p>Tres formas de firmar PDFs en web con valor legal (eIDAS):</p>
+<ul>
+  <li><strong>A. Firma local con AutoFirma</strong> &mdash; la clave privada vive en el dispositivo del usuario.</li>
+  <li><strong>B. Cl@ve Firma</strong> &mdash; firma centralizada en un HSM de la FNMT; solo para el sector público.</li>
+  <li><strong>C. TSP comercial (firma en la nube)</strong> &mdash; firma centralizada en un HSM de un Prestador Cualificado contratado por la empresa.</li>
+</ul>
+
+<p>Todos producen firmas <strong>cualificadas</strong> (eIDAS QES) cuando se usa un certificado cualificado. Lo que cambia es <strong>dónde vive la clave privada</strong>, <strong>quién custodia el HSM</strong> y <strong>qué requisitos contractuales/legales tiene quien integra el servicio</strong>.</p>
+
+<h3 id="modelo-a">Modelo A &mdash; AutoFirma (firma local)</h3>
+
+<p>La clave privada está en el certificado del usuario, instalado en su navegador, en una tarjeta criptográfica (DNIe, cert FNMT en tarjeta) o en un token USB. AutoFirma es la app de escritorio (Win/Mac/Linux) o móvil (iOS/Android) que media entre la web y el almacén de certificados del sistema operativo.</p>
+
+<div class="mermaid">
+sequenceDiagram
+    autonumber
+    participant U as Usuario
+    participant N as Navegador
+    participant W as Tu web
+    participant A as AutoFirma (local)
+    participant K as Almacén SO / tarjeta
+
+    U->>N: Abre la web y pulsa "Firmar"
+    N->>W: GET PDF a firmar
+    W-->>N: PDF (bytes)
+    N->>A: afirma://websocket?ports=...
+    Note over N,A: Deep link arranca AutoFirma<br/>y abre un WebSocket local
+    A->>K: Listar certificados disponibles
+    K-->>A: FNMT, DNIe, etc.
+    A->>U: Selector de cert + PIN
+    U->>A: Confirma
+    A->>K: Aplicar clave privada al hash (RSA/ECDSA)
+    K-->>A: Firma cruda
+    A->>A: Construye PAdES y embebe firma
+    A-->>N: PDF firmado (WebSocket)
+    N->>W: POST PDF firmado
+    W-->>N: Validación + datos del firmante
+</div>
+
+<p><strong>Quién lo usa</strong>: AEAT, Seguridad Social, casi toda la admin española. También cualquier empresa privada.</p>
+
+<h3 id="modelo-b">Modelo B &mdash; Cl@ve Firma (firma centralizada del Estado)</h3>
+
+<p>La clave privada del ciudadano vive en un <strong>HSM operado por la FNMT</strong>. El ciudadano nunca la tiene físicamente; firma autenticándose con Cl@ve PIN o Cl@ve Permanente y autorizando la operación con OTP. <strong>Solo organismos del Sector Público Administrativo Estatal pueden ser proveedores de servicios (SP) de Cl@ve</strong>.</p>
+
+<div class="mermaid">
+sequenceDiagram
+    autonumber
+    participant U as Usuario
+    participant N as Navegador
+    participant SP as Web SP<br/>(organismo público)
+    participant ID as Cl@ve IDP<br/>(SGAD)
+    participant FNMT as Cl@ve Firma<br/>+ HSM FNMT
+
+    U->>N: Abre el trámite y pulsa "Firmar"
+    N->>SP: Solicitar firma
+    SP->>ID: Redirige a Cl@ve (SAML 2.0 / STORK)
+    Note over SP,ID: SP debe estar dado de alta<br/>en SGAD y tener cert SP
+    ID->>U: Pantalla de login Cl@ve
+    U->>ID: Cl@ve PIN / Permanente / cert
+    ID-->>SP: SAML Assertion (identidad confirmada)
+    SP->>FNMT: Solicitar firma del hash + identidad
+    FNMT->>U: Pide consentimiento (OTP móvil)
+    U->>FNMT: OTP
+    FNMT->>FNMT: HSM aplica clave privada del usuario
+    FNMT-->>SP: Firma cruda
+    SP->>SP: Embebe en PAdES
+    SP-->>N: PDF firmado
+</div>
+
+<p><strong>Quién lo usa</strong>: trámites en sede electrónica de AEAT, Seguridad Social, comunidades autónomas, ayuntamientos.</p>
+
+<h3 id="modelo-c">Modelo C &mdash; TSP comercial (firma en la nube para privados)</h3>
+
+<p>Equivalente funcional a Cl@ve Firma pero ofrecido por un <strong>Prestador Cualificado de Servicios de Confianza</strong> (TSP) que figura en la <strong>Lista Europea de Confianza eIDAS</strong>. La empresa contrata al TSP, los usuarios se dan de alta en el TSP (presencialmente o por videoidentificación cumpliendo eIDAS), y firman desde la web de la empresa.</p>
+
+<div class="mermaid">
+sequenceDiagram
+    autonumber
+    participant U as Usuario
+    participant N as Navegador
+    participant W as Tu web<br/>(empresa privada)
+    participant TSP as TSP<br/>(Uanataca, Viafirma, FNMT-Empresa, etc.)
+    participant H as HSM del TSP
+
+    U->>N: Abre la web y pulsa "Firmar"
+    N->>W: Solicitar firma
+    W->>TSP: API REST: "firma este hash para user X"
+    Note over W,TSP: Auth con API key/cert<br/>de empresa contratante
+    TSP->>U: Push o SMS al móvil del usuario<br/>(OTP / biometría)
+    U->>TSP: Confirma consentimiento
+    TSP->>H: Aplicar clave privada del usuario al hash
+    H-->>TSP: Firma cruda
+    TSP-->>W: Firma + cadena de certificados
+    W->>W: Embebe en PAdES
+    W-->>N: PDF firmado
+</div>
+
+<p><strong>Quién lo usa</strong>: bancos, aseguradoras, gestorías, plataformas SaaS de contratación.</p>
+
+<h2 id="comparativa">2. Los 3 modelos de un vistazo</h2>
+
+<p>Los navegadores ya no pueden tocar el almacén de certificados desde JavaScript (murió en 2015 con NPAPI). Por eso hoy hay <strong>3 modelos</strong> para firmar en web, y se diferencian en <strong>dónde vive la clave privada</strong>.</p>
+
+<h3>Modelo A &mdash; AutoFirma (firma LOCAL)</h3>
+<p>La clave vive en el dispositivo del usuario (cert FNMT, DNIe). Una app nativa (AutoFirma escritorio o Cliente Móvil @firma) hace de puente entre la web y el almacén del SO. La web la invoca con un deep link <code>afirma://</code>. Lo usa toda la admin española. Gratis para integrar. <strong>Pega</strong>: el usuario debe instalar la app y tener su certificado configurado &rarr; fricción alta.</p>
+
+<h3>Modelo B &mdash; Cl@ve Firma (firma CENTRALIZADA del Estado)</h3>
+<p>La clave del ciudadano vive en un HSM de la FNMT. El usuario firma con login Cl@ve + OTP, sin instalar nada. UX excelente. <strong>Pega gorda</strong>: solo organismos del Sector Público Administrativo pueden integrar (convenio con SGAD). Para empresas privadas, imposible.</p>
+
+<h3>Modelo C &mdash; TSP comercial (firma EN LA NUBE para privados)</h3>
+<p>Igual que Cl@ve pero el HSM lo opera un Prestador Cualificado contratado por la empresa (Uanataca, FNMT-Empresa, Validated ID, Viafirma&hellip;). El usuario firma con OTP, cero software local. Coste por firma (~0,20&ndash;2 &euro;). Es el modelo de DocuSign, Signaturit y compañía.</p>
+
+<h3>Tabla comparativa</h3>
+<table>
+<thead>
+<tr><th>&nbsp;</th><th>A. AutoFirma</th><th>B. Cl@ve Firma</th><th>C. TSP comercial</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Dónde vive la clave</strong></td><td>Dispositivo usuario</td><td>HSM FNMT</td><td>HSM del TSP</td></tr>
+<tr><td><strong>Quién la custodia</strong></td><td>El propio usuario</td><td>Estado (FNMT)</td><td>Empresa cualificada</td></tr>
+<tr><td><strong>Quién puede integrar</strong></td><td>Cualquiera</td><td>Solo admin pública</td><td>Cualquiera</td></tr>
+<tr><td><strong>Coste para integrador</strong></td><td>0 &euro;</td><td>0 &euro;</td><td>0,20&ndash;2 &euro;/firma</td></tr>
+<tr><td><strong>Software en cliente</strong></td><td>App nativa obligada</td><td>Solo navegador</td><td>Solo navegador</td></tr>
+<tr><td><strong>Fricción del firmante</strong></td><td>Alta</td><td>Baja</td><td>Baja</td></tr>
+<tr><td><strong>Validez legal</strong></td><td>Cualificada</td><td>Cualificada</td><td>Cualificada</td></tr>
+<tr><td><strong>Quién lo usa</strong></td><td>AEAT, SS, admin. Empresas privadas con audiencia técnica</td><td>Sedes electrónicas públicas</td><td>Bancos, seguros, SaaS de contratación</td></tr>
+</tbody>
+</table>
+
+<h3>Decisión rápida</h3>
+<ul>
+  <li>¿Eres administración pública? &rarr; <strong>Cl@ve Firma</strong> o accesos con certificado a la sede electrónica.</li>
+  <li>¿Privado con audiencia técnica/profesional (gestorías, autónomos)? &rarr; <strong>AutoFirma</strong>.</li>
+  <li>¿Privado con público general y quieres conversión? &rarr; <strong>TSP comercial</strong>, asumiendo el coste por firma.</li>
+</ul>
+
+<h2 id="elegir">3. Cuándo elegir cada uno</h2>
+<ul>
+  <li><strong>A</strong> si: producto interno, audiencia técnica o administrativa, presupuesto cero, OK con fricción de instalación.</li>
+  <li><strong>B</strong> si: eres organismo público con convenio con SGAD.</li>
+  <li><strong>C</strong> si: producto para público general, alta conversión importante, dispuesto a pagar por firma, quieres delegar custodia y compliance.</li>
+</ul>
+
+<h2 id="tsps">4. TSPs cualificados en España (no exhaustivo)</h2>
+<ul>
+  <li><strong>FNMT-RCM</strong> &mdash; "Firma en la Nube" para empresas (servicio comercial, distinto de Cl@ve).</li>
+  <li><strong>Uanataca</strong>, <strong>ANF AC</strong>, <strong>Camerfirma</strong> (MyCertificates), <strong>Logalty</strong>, <strong>Lleida.net</strong>, <strong>Validated ID</strong>, <strong>Viafirma</strong>, <strong>Signaturit</strong>, <strong>Evicertia</strong>.</li>
+</ul>
+
+<p>Lista oficial actualizada: <a href="https://sedeaplicaciones.minetur.gob.es/Prestadores/">Lista de Confianza Española eIDAS</a> y <a href="https://eidas.ec.europa.eu/efda/tl-browser/">Trusted List Browser</a>.</p>
+
+<h2 id="faq">5. Preguntas frecuentes</h2>
+
+<details>
+  <summary>¿Qué es una firma "cualificada"? <span class="tag">legal</span></summary>
+  <div class="answer">
+    <p>Es el nivel más alto de firma electrónica definido por el reglamento europeo <strong>eIDAS (UE 910/2014)</strong>. Una firma cualificada (<em>Qualified Electronic Signature</em>, QES) tiene <strong>el mismo valor legal que una firma manuscrita en toda la Unión Europea</strong>, sin necesidad de prueba pericial adicional.</p>
+    <p>Para que una firma sea cualificada deben cumplirse <strong>tres requisitos</strong> simultáneos:</p>
+    <ol>
+      <li><strong>Es una firma avanzada</strong>: identifica unívocamente al firmante, está vinculada al documento de forma que detecta modificaciones, y se crea con datos que solo el firmante controla.</li>
+      <li><strong>Se crea con un certificado cualificado</strong>: emitido por un <em>Prestador Cualificado de Servicios de Confianza</em> que aparece en la <a href="https://eidas.ec.europa.eu/efda/tl-browser/">Lista Europea de Confianza</a>. En España: FNMT-RCM, DNIe (Policía), Uanataca, Camerfirma, etc.</li>
+      <li><strong>Se aplica con un dispositivo cualificado de creación de firma (QSCD)</strong>: el chip del DNIe, el HSM de un TSP, o el almacén software de Windows usado por AutoFirma con cert FNMT cumplen este requisito.</li>
+    </ol>
+    <p>Por debajo hay otros dos niveles eIDAS de menor peso probatorio:</p>
+    <ul>
+      <li><strong>Firma simple</strong> &mdash; cualquier dato electrónico asociado al firmante (un click "Acepto"). Vale como indicio en juicio, sin presunción de validez.</li>
+      <li><strong>Firma avanzada (AdES)</strong> &mdash; cumple el requisito 1 pero no 2 o 3. Sólido en juicio aunque sin presunción automática. Es lo que producen DocuSign, Signaturit, etc. con OTP.</li>
+    </ul>
+    <p><strong>En la práctica</strong>: cuando usas AutoFirma con tu cert FNMT, o el DNIe con su lector, o un TSP cualificado, la firma resultante es <strong>cualificada</strong>. Cuando firmas un contrato en DocuSign con OTP por SMS, suele ser solo <strong>avanzada</strong>.</p>
+  </div>
+</details>
+
+<details>
+  <summary>¿Por qué no se puede acceder al almacén de certificados del navegador (escritorio y móvil)? <span class="tag">básico</span></summary>
+  <div class="answer">
+    <p>Hasta ~2015 sí se podía: con <strong>plugins NPAPI</strong> (Chrome) y <strong>applets de Java</strong> (Firefox) una web podía leer el almacén de certificados del sistema operativo y firmar directamente. Esas tecnologías se eliminaron por razones de seguridad (eran vectores constantes de exploits).</p>
+    <p>Hoy el navegador moderno expone solo dos formas de "ver" certificados, y <strong>ninguna sirve para firmar documentos arbitrarios</strong>:</p>
+    <ul>
+      <li><strong>TLS Client Authentication</strong>: el navegador presenta tu certificado al servidor durante el handshake TLS para autenticar la sesión. Sirve para "este soy yo" pero no para firmar un PDF concreto.</li>
+      <li><strong>Web Crypto API</strong>: expone primitivas criptográficas (RSA, AES, ECDSA) pero <em>no</em> tiene acceso al keystore del sistema operativo. Solo funciona con claves generadas dentro del propio navegador, sin importar tarjetas, DNIe ni FNMT.</li>
+    </ul>
+    <p>En <strong>móvil</strong> el aislamiento es aún más estricto: iOS y Android no permiten que el navegador (Safari, Chrome) toque el llavero del sistema. La única vía es delegar en una app nativa con permisos específicos.</p>
+    <p>Por eso AutoFirma, Cliente Móvil @firma o cualquier solución de firma con cert local <em>es una aplicación externa</em> que la web invoca mediante un <code>protocol handler</code> (<code>afirma://</code>). La web nunca "ve" tu clave privada.</p>
+  </div>
+</details>
+
+<details>
+  <summary>¿Existe alguna forma de firmar documentos en la web con mi certificado del dispositivo sin software intermedio tipo AutoFirma? <span class="tag">básico</span></summary>
+  <div class="answer">
+    <p><strong>No, hoy no existe.</strong> Al menos no con tecnologías web estándar y no si la clave privada vive en el dispositivo del usuario.</p>
+    <p>El navegador es un sandbox muy estricto: que una página de <code>cualquiercosa.com</code> pudiera tocar tu llavero del sistema operativo desde JavaScript sería catastrófico. Cualquier web podría firmar en tu nombre sin que te enteres. Por eso los plugins NPAPI y los applets Java se eliminaron, y <em>nada</em> los ha sustituido.</p>
+    <p>Tecnologías que existen y suenan parecidas, pero no firman documentos:</p>
+    <table>
+      <thead>
+        <tr><th>Tecnología</th><th>Para qué sirve</th><th>Por qué no firma documentos</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Web Crypto API</strong></td>
+          <td>Cifrar, hashear, generar claves <em>dentro</em> del navegador</td>
+          <td>No accede al almacén del SO ni a tarjetas; solo trabaja con claves que tú le metes desde JS</td>
+        </tr>
+        <tr>
+          <td><strong>WebAuthn / Passkeys</strong></td>
+          <td>Login sin contraseña con biometría / hardware key</td>
+          <td>Firma <em>challenges aleatorios</em> para autenticar, no documentos. No produce PAdES</td>
+        </tr>
+        <tr>
+          <td><strong>TLS Client Authentication</strong></td>
+          <td>El SO presenta tu cert al servidor durante el handshake</td>
+          <td>Solo identifica la sesión; el navegador ni ve la clave, ni firma un PDF</td>
+        </tr>
+        <tr>
+          <td><strong>Web NFC</strong> (Android Chrome)</td>
+          <td>Leer/escribir tags NFC NDEF</td>
+          <td>No habla APDU con el chip del DNIe &mdash; incompatible con su protocolo</td>
+        </tr>
+        <tr>
+          <td><strong>Web Smart Card API</strong></td>
+          <td>Sería exactamente esto</td>
+          <td>Lleva años como propuesta W3C, ningún navegador la implementa</td>
+        </tr>
+      </tbody>
+    </table>
+    <p><strong>Consecuencia práctica</strong>: si la clave vive en el dispositivo, hace falta software intermedio sí o sí. Hay dos patrones:</p>
+    <ol>
+      <li><strong>App nativa con protocol handler</strong> &mdash; AutoFirma, Cliente Móvil @firma. Es el camino oficial en España.</li>
+      <li><strong>Extensión de navegador + binario local</strong> (native messaging host) &mdash; algunos TSPs comerciales lo ofrecen (FirmaFacil, NeoID). Sigue siendo software intermedio, solo que más invisible.</li>
+    </ol>
+    <p><strong>La salida moderna</strong>: que la clave no esté en el dispositivo. Si quieres una experiencia web pura, el mercado ha movido la clave a un HSM remoto (Cl@ve Firma, TSPs como Uanataca o FNMT-Empresa). UX: login &rarr; consentimiento por OTP / biometría &rarr; firmado. Cero software local; a cambio, la clave la custodia un tercero y pagas por uso.</p>
+    <p>En resumen: la web <em>no puede</em> firmar con tu cert local por diseño. O instalas un puente (AutoFirma), o mueves la clave a la nube. No hay tercera vía.</p>
+  </div>
+</details>
+
+<details>
+  <summary>¿Qué otros mecanismos de firma se suelen usar para un contrato? <span class="tag">comparativa</span></summary>
+  <div class="answer">
+    <p>Más allá de la firma con certificado cualificado (AutoFirma, Cl@ve Firma, TSP comercial), el mercado usa otros mecanismos según el riesgo y el contexto:</p>
+    <ul>
+      <li><strong>Firma electrónica simple (click-to-sign)</strong> &mdash; el firmante pulsa "Acepto" y se registran metadatos (IP, timestamp, hash del documento, user-agent). Lo usan DocuSign, Adobe Sign, Signaturit, Logalty para contratos de bajo riesgo (NDA, términos de uso, suscripciones).</li>
+      <li><strong>OTP por SMS o email</strong> &mdash; doble factor: el firmante recibe un código en su móvil/email y lo introduce. Equivalente a una firma electrónica avanzada según eIDAS si se hace bien. Habitual en banca, seguros, alquileres.</li>
+      <li><strong>Firma biométrica con tableta</strong> &mdash; el firmante traza la rúbrica con un lápiz en una tableta (Wacom, etc.) que captura presión, velocidad y aceleración. Esos vectores biométricos se cifran y embeben en el PDF. Lo usan bancos en sucursal para apertura de cuenta.</li>
+      <li><strong>Videoidentificación + firma</strong> &mdash; el firmante se identifica grabando un vídeo con su DNI; algunos proveedores combinan eso con un certificado emitido al vuelo (TSPs cualificados eIDAS).</li>
+      <li><strong>Sello electrónico de empresa</strong> &mdash; cuando firma una persona jurídica (no una persona física), se usa un certificado de "sello" emitido a la empresa. Lo aplica un servidor automáticamente (facturas electrónicas, certificados expedidos a clientes).</li>
+      <li><strong>Acuerdo electrónico tipo "click-wrap" / "browse-wrap"</strong> &mdash; aceptación contractual implícita al usar un servicio. Es el más débil, pero suficiente para términos de uso de una web.</li>
+    </ul>
+    <p>Para un <strong>contrato</strong> concreto, la regla es: <em>a más riesgo o cuantía, más fuerte el mecanismo</em>. Un NDA puede ir con click-to-sign. Una compraventa de inmueble o un poder notarial necesitan firma cualificada (AutoFirma con cert FNMT/DNIe, o TSP cualificado).</p>
+  </div>
+</details>
+
+<details>
+  <summary>¿Qué diferencia hay entre PAdES, CAdES y XAdES? <span class="tag">formatos</span></summary>
+  <div class="answer">
+    <p>Son los tres formatos "Advanced Electronic Signature" (AdES) definidos por ETSI bajo el paraguas eIDAS. Lo que cambia es <strong>qué tipo de fichero se firma y cómo se embebe la firma</strong>:</p>
+    <ul>
+      <li><strong>PAdES</strong> &mdash; PDF Advanced Electronic Signatures. La firma va embebida dentro del propio PDF en un campo de firma. Adobe Reader, Chrome y cualquier visor PDF moderno la reconocen y validan visualmente.</li>
+      <li><strong>CAdES</strong> &mdash; CMS (Cryptographic Message Syntax) Advanced Electronic Signatures. Firma sobre cualquier binario; produce un fichero <code>.p7s</code> o <code>.csig</code> separado del documento original (firma "detached"). Lo usan trámites de la admin española para firmar XMLs, ZIPs, etc.</li>
+      <li><strong>XAdES</strong> &mdash; XML Advanced Electronic Signatures. Firma específica para XML, con la firma embebida o adjunta como otro nodo XML. Lo usa la facturación electrónica española (Facturae), justificantes de la AEAT, etc.</li>
+    </ul>
+    <p>Los tres tienen niveles incrementales: <code>B-B</code> (básico), <code>B-T</code> (con sellado de tiempo), <code>B-LT</code> (con info de revocación), <code>B-LTA</code> (archivo a largo plazo).</p>
+  </div>
+</details>
+
+<details>
+  <summary>¿Qué validez legal tiene una firma con mi certificado FNMT? <span class="tag">legal</span></summary>
+  <div class="answer">
+    <p>El reglamento europeo <strong>eIDAS (UE 910/2014)</strong> distingue tres niveles:</p>
+    <ol>
+      <li><strong>Firma electrónica simple</strong>: cualquier dato electrónico asociado a la firma (un click, un check en un formulario). Vale como indicio en juicio pero no tiene presunción de validez.</li>
+      <li><strong>Firma electrónica avanzada (AdES)</strong>: identifica unívocamente al firmante, está vinculada al documento de forma que detecta modificaciones y se crea con datos que el firmante controla en exclusiva. Tiene mayor peso probatorio.</li>
+      <li><strong>Firma electrónica cualificada (QES)</strong>: una firma avanzada hecha con un <em>certificado cualificado</em> emitido por un Prestador Cualificado (FNMT-RCM lo es) y creada con un dispositivo cualificado de creación de firma. <strong>Tiene el mismo valor legal que la firma manuscrita</strong> en toda la UE.</li>
+    </ol>
+    <p>Tu certificado FNMT de persona física, usado a través de AutoFirma con el cert software del almacén de Windows, produce <strong>firma cualificada</strong> y por tanto es legalmente equivalente a firmar a mano.</p>
+  </div>
+</details>
+
+<details>
+  <summary>¿Necesito sellado de tiempo (TSA) para que la firma sirva a largo plazo? <span class="tag">avanzado</span></summary>
+  <div class="answer">
+    <p>Sin sellado de tiempo, una firma demuestra <em>quién</em> firmó pero no <em>cuándo</em>. Esto importa porque los certificados <strong>expiran</strong> (los FNMT duran ~4 años) y pueden ser <strong>revocados</strong> antes. Una firma sin timestamp se vuelve "no verificable" cuando el cert caduca o se revoca.</p>
+    <p>El <strong>sellado de tiempo</strong> es una firma adicional aplicada por una <em>autoridad de tiempo (TSA)</em> que certifica que ese hash existía en ese instante. Con eso, aunque tu cert caduque años después, sigue siendo posible probar que la firma se hizo cuando tu cert estaba vigente.</p>
+    <p>Niveles ETSI:</p>
+    <ul>
+      <li><strong>B-B</strong> (sin TSA): vale para corto plazo.</li>
+      <li><strong>B-T</strong>: añade timestamp de la firma.</li>
+      <li><strong>B-LT</strong>: añade información de revocación del cert.</li>
+      <li><strong>B-LTA</strong>: añade timestamps periódicos sobre toda la estructura anterior para que sobreviva décadas.</li>
+    </ul>
+    <p>Para contratos archivados &gt;5 años o pruebas judiciales futuras, lo recomendado es <strong>B-LT</strong> como mínimo. Para preservación a muy largo plazo (escrituras, expedientes), <strong>B-LTA</strong>.</p>
+  </div>
+</details>
+
+<details>
+  <summary>¿Qué pasa si modifico el PDF después de firmarlo? <span class="tag">integridad</span></summary>
+  <div class="answer">
+    <p>La firma "rompe" inmediatamente. La firma electrónica incluye un <strong>hash criptográfico</strong> (SHA-256) del contenido firmado; cualquier cambio &mdash;aunque sea un solo bit&mdash; produce un hash distinto, y al verificar se detecta el desfase.</p>
+    <p>En Adobe Reader, un PDF firmado y modificado muestra el panel de firmas en <strong>rojo</strong> con "El documento ha sido modificado o dañado desde que se aplicó la firma".</p>
+    <p>El estándar PAdES admite <strong>modificaciones permitidas</strong> mediante "incremental updates" (firmar, añadir anotaciones, firmar otra vez). Si lo configuras así, la primera firma sigue válida y se acumula una segunda. Sin esa configuración, cualquier toque invalida.</p>
+  </div>
+</details>
+
+<details>
+  <summary>¿Puedo firmar con el DNIe electrónico en lugar del cert FNMT? <span class="tag">DNIe</span></summary>
+  <div class="answer">
+    <p>Sí, el DNIe contiene dos certificados cualificados (uno de autenticación, otro de firma) emitidos por la Dirección General de la Policía. Para firmar PDFs:</p>
+    <ul>
+      <li><strong>DNIe físico</strong> (tarjeta con chip): necesitas un lector USB de tarjetas inteligentes. Al insertarlo, Windows/macOS lo expone como un dispositivo PKCS#11. AutoFirma lo detecta automáticamente.</li>
+      <li><strong>DNIe en móvil (DNIe Box / DNIe On Mobile)</strong>: la versión 4.0 del DNIe permite usarlo desde el móvil acercándolo por NFC y usando la app oficial.</li>
+    </ul>
+    <p>Diferencias con el cert FNMT software:</p>
+    <ul>
+      <li>El DNIe es <strong>más seguro</strong>: la clave privada nunca sale del chip de la tarjeta, ni se puede copiar.</li>
+      <li>Es <strong>menos cómodo</strong>: necesita lector físico (escritorio) o NFC + app (móvil).</li>
+      <li>Los certificados del DNIe duran solo <strong>2 años</strong> (frente a 4 del FNMT software) y se renuevan en un Punto de Actualización del DNI.</li>
+    </ul>
+  </div>
+</details>
+
+<details>
+  <summary>¿Cuáles son los errores típicos de AutoFirma y cómo se solucionan? <span class="tag">troubleshooting</span></summary>
+  <div class="answer">
+    <p>Los códigos de error de AutoFirma empiezan por <code>SAF_</code>. Los más frecuentes:</p>
+    <ul>
+      <li><strong>SAF_01</strong> &mdash; no hay certificados en el almacén. Asegúrate de que el cert FNMT está en <code>certmgr → Personal → Certificados</code> en Windows.</li>
+      <li><strong>SAF_04</strong> &mdash; el documento no admite firma. Suele ser PDF protegido contra modificación o con permisos restrictivos.</li>
+      <li><strong>SAF_07</strong> &mdash; el usuario canceló la operación (cerró la ventana de selección de cert o el PIN).</li>
+      <li><strong>SAF_19</strong> &mdash; AutoFirma no encuentra el cert raíz "AutoFirma ROOT" en el almacén del navegador. Reinstala AutoFirma marcando "instalar certificado SSL" durante el setup.</li>
+      <li><strong>El selector de cert sale pero después se queda colgado</strong> &mdash; típicamente WebSocket bloqueado: el cert raíz "AutoFirma ROOT" no está en "Entidades de certificación raíz de confianza" o un antivirus bloquea puertos efímeros (54000-65000) en localhost.</li>
+      <li><strong>El protocol handler <code>afirma://</code> no abre nada</strong> &mdash; en Windows reinstala AutoFirma; en macOS abre <em>Preferencias del Sistema → Privacidad y seguridad</em> y autoriza la app; en Linux registra el handler manualmente con <code>xdg-mime</code>.</li>
+    </ul>
+    <p>Si ves un error que no está en la lista, busca el código exacto en <a href="https://github.com/ctt-gob-es/clienteafirma/issues">los issues abiertos del repo del Cliente @firma</a>.</p>
+  </div>
+</details>
+
+<section class="case-study" id="caso">
+  <h2>6. Caso práctico: contrato de servicios de administración</h2>
+  <p class="question">Somos una empresa privada que ofrece un servicio de administración y queremos firmar el contrato con nuestros clientes. ¿Qué mecanismo elegir?</p>
+
+  <p><strong>Recomendación: SaaS de firma electrónica avanzada con OTP</strong> (Signaturit, Validated ID, Logalty, Dropbox Sign / DocuSign). El cliente recibe un email con el contrato &rarr; lo lee en el navegador del móvil &rarr; introduce un código OTP que le llega por SMS &rarr; firmado. La firma resultante es <strong>avanzada eIDAS</strong> con peso probatorio fuerte: identifica al firmante, vincula contenido y firma, y deja audit trail (IP, timestamp, hash, OTP, dispositivo). Cuesta ~0,80&ndash;2 &euro;/firma según volumen.</p>
+
+  <p><strong>Por qué se descartan las otras opciones para este caso:</strong></p>
+
+  <table>
+    <thead>
+      <tr><th>Opción</th><th>Por qué no</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>AutoFirma + cert FNMT/DNIe</strong></td>
+        <td>Tasa de abandono brutal en público no técnico (instalar app, tener cert, recordar PIN). Solo si los clientes son gestorías o autónomos ya acostumbrados.</td>
+      </tr>
+      <tr>
+        <td><strong>TSP con cert cualificado en la nube</strong></td>
+        <td>UX similar al OTP pero ~3&ndash;5 &euro; por firma cualificada y el alta del firmante requiere videoidentificación oficial. Solo si la ley obliga a cualificada.</td>
+      </tr>
+      <tr>
+        <td><strong>Cl@ve Firma</strong></td>
+        <td>Imposible: cerrado a sector público.</td>
+      </tr>
+      <tr>
+        <td><strong>Click-to-sign sin OTP</strong></td>
+        <td>Demasiado débil para un contrato con cuantía recurrente; un juez podría tumbarlo.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>El salto a <strong>firma cualificada</strong> solo merece la pena si: (a) el contrato es de cuantía alta y litigioso, (b) hay obligación regulatoria específica (raro en servicios privados), o (c) los clientes son organismos públicos que la exigen.</p>
+
+  <p><strong>Variables que afinarían la recomendación:</strong></p>
+  <ul>
+    <li>Cuantía del contrato.</li>
+    <li>Perfil del firmante (particular / autónomo / empresa).</li>
+    <li>Volumen anual previsto.</li>
+    <li>Necesidad de archivado a largo plazo (&gt;5 años con sellado B-LTA).</li>
+    <li>Regulador sectorial específico (banca, seguros, sanidad).</li>
+  </ul>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'default',
+    sequence: { useMaxWidth: true, wrap: true }
+  });
+</script>
+
+</body>
+</html>
